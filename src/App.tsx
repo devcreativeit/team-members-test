@@ -4,23 +4,11 @@ import adminPic from "./assets/admin_pan.svg";
 import chevronRightPic from "./assets/chevron_right.svg";
 import standartPic from "./assets/standart_pan.svg";
 
-import { isTeamMember, isInvite, TeamListItem } from "./types";
+import { isTeamMember, isInvite, ObjectWithRoleAndId } from "./types";
 import Loading from "./components/Loading";
 import clsx from "clsx";
 
-const sortByRole = (array: TeamListItem[]) => {
-  if (!array) return [[], []];
-  const adminItems: TeamListItem[] = [];
-  const standartItems: TeamListItem[] = [];
-  array.forEach(
-    (item) =>
-      (item.role === "Administrator" && adminItems.push(item)) ||
-      (item.role === "Standard" && standartItems.push(item))
-  );
-  return [adminItems, standartItems];
-};
-
-const ListItem = ({ itemData }: { itemData: TeamListItem }) => {
+const ListItem = ({ itemData }: { itemData: ObjectWithRoleAndId }) => {
   const [isActive, toggleActive] = useState(false);
   return (
     <li
@@ -52,7 +40,7 @@ const ListItem = ({ itemData }: { itemData: TeamListItem }) => {
   );
 };
 
-const List = ({ teamDataArr }: { teamDataArr: TeamListItem[] }) => {
+const List = ({ teamDataArr }: { teamDataArr: ObjectWithRoleAndId[] }) => {
   return (
     <ul className="team__list">
       {teamDataArr.map((item) => (
@@ -63,13 +51,11 @@ const List = ({ teamDataArr }: { teamDataArr: TeamListItem[] }) => {
 };
 
 const App = () => {
-  const { data: members = [], isLoading: loadingMembers } =
-    useGetTeamMembersQuery();
-  const { data: invites = [], isLoading: loadingInivtes } =
-    useGetInvitesQuery();
+  const { data: members, isLoading: loadingMembers } = useGetTeamMembersQuery();
+  const { data: invites, isLoading: loadingInivtes } = useGetInvitesQuery();
 
-  const [adminMembers, standartMembers] = sortByRole(members);
-  const [adminInivtes, standartInvites] = sortByRole(invites);
+  const [adminMembers, standartMembers] = members ?? [[], []];
+  const [adminInivtes, standartInvites] = invites ?? [[], []];
 
   const adminsArr = adminMembers.concat(adminInivtes);
   const standartArr = standartMembers.concat(standartInvites);
