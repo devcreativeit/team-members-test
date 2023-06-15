@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetTeamMembers, useGetInvites } from "./hooks";
+import { useGetTeamMembersQuery, useGetInvitesQuery } from "./hooks";
 import adminPic from "./assets/admin_pan.svg";
 import chevronRightPic from "./assets/chevron_right.svg";
 import standartPic from "./assets/standart_pan.svg";
@@ -60,8 +60,10 @@ const List = ({ teamDataArr }: { teamDataArr: TeamListItem[] }) => {
 };
 
 const App = () => {
-  const { data: members = [], isLoading: loadingMembers } = useGetTeamMembers();
-  const { data: invites = [], isLoading: loadingInivtes } = useGetInvites();
+  const { data: members = [], isLoading: loadingMembers } =
+    useGetTeamMembersQuery();
+  const { data: invites = [], isLoading: loadingInivtes } =
+    useGetInvitesQuery();
 
   const [adminMembers, standartMembers] = sortByRole(members);
   const [adminInivtes, standartInvites] = sortByRole(invites);
