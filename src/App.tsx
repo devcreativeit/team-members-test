@@ -5,7 +5,7 @@ import chevronRightPic from "./assets/chevron_right.svg";
 import standartPic from "./assets/standart_pan.svg";
 
 import { isTeamMember, isInvite, TeamListItem } from "./types";
-import Loading from "./components/loading";
+import Loading from "./components/Loading";
 
 const sortByRole = (array: TeamListItem[]) => {
   if (!array) return [[], []];
