@@ -6,6 +6,7 @@ import standartPic from "./assets/standart_pan.svg";
 
 import { isTeamMember, isInvite, TeamListItem } from "./types";
 import Loading from "./components/Loading";
+import clsx from "clsx";
 
 const sortByRole = (array: TeamListItem[]) => {
   if (!array) return [[], []];
@@ -24,10 +25,12 @@ const ListItem = ({ itemData }: { itemData: TeamListItem }) => {
   return (
     <li
       onClick={() => toggleActive((prevState) => !prevState)}
-      className={`team__list__item team__list__item_type_${
-        (isInvite(itemData) && "invite") || (isTeamMember(itemData) && "member")
-      }
-      ${isActive && "active"}`}
+      className={clsx(
+        "team__list__item",
+        isInvite(itemData) && "invite",
+        isTeamMember(itemData) && "member",
+        isActive && "active"
+      )}
     >
       <span className="team__list__item__title">
         {isInvite(itemData) && itemData.phone}
@@ -40,9 +43,9 @@ const ListItem = ({ itemData }: { itemData: TeamListItem }) => {
       <img
         src={chevronRightPic}
         alt="chevron"
-        className={`team__list__item__chevron ${isActive && "active"}`}
+        className={clsx("team__list__item__chevron", isActive && "active")}
       />
-      <div className={`team__list__item__content ${isActive && "active"}`}>
+      <div className={clsx("team__list__item__content", isActive && "active")}>
         Content
       </div>
     </li>

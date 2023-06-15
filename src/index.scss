@@ -96,13 +96,11 @@ body {
         box-shadow: 0px 3px 24px rgba(130, 139, 151, 0.1);
       }
 
-      &_type {
-        &_member {
-          color: #3e4959;
-        }
-        &_invite {
-          color: #828b97;
-        }
+      &.member {
+        color: #3e4959;
+      }
+      &.invite {
+        color: #828b97;
       }
 
       &__title {
